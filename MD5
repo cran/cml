@@ -1,0 +1,14 @@
+dea3bea40ae8fd53cac4547ad1af8f43 *DESCRIPTION
+2e5781872d5aff8f4bc3224b08c515ea *NAMESPACE
+cda45266e0940adc063573dd6cbaa788 *R/condDist.R
+3655b9f896539a4314ad4422856db8b5 *R/condDist2.R
+253231b352b8dd9dd46847422b19ec44 *R/condIsomap.R
+895b72af721bfe46b43de5e255d7e9ef *R/condMDS.R
+916cdb7bedd1ff4ed070fd40e785bd3d *R/condSmacof_matrix.R
+9e05439b7a9e3bdc126e3c5ae25f6032 *R/condSmacof_vector.R
+0e3f6bfe461624dbc0f1b549324ae80f *inst/CITATION
+07ba52be77386831e4c49072a56c1ca7 *man/cml-package.Rd
+86a33668d952cfa756c3682dcc27ca58 *man/condDist.Rd
+3dab06b37ccc322f57d9d811577675a3 *man/condIsomap.Rd
+ca3dfda5e4022ca93d77f1129ca5b311 *man/condMDS.Rd
+a912cde1f1619ac01a074b7bd9533cd3 *man/condSmacof.Rd
