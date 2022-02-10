@@ -1,6 +1,15 @@
-bibentry(bibtype = "Manual",
-         title = "Conditional Manifold Learning",
-         author = c(person("Anh", "Bui", "Tuan")),
-         year = 2021,
-         doi = ""
-         )
+citHeader("To cite cml in publications use:")
+
+citEntry(entry = "Article",
+  title        = "Dimension Reduction with Prior Information for Knowledge Discovery",
+  author       = personList(as.person("Anh Tuan Bui")),
+  journal      = "arXiv:2111.13646",
+  year         = "2021",
+  url          = "https://arxiv.org/abs/2111.13646",
+
+  textVersion  =
+  paste("Anh Tuan Bui (2021).",
+        "Dimension Reduction with Prior Information for Knowledge Discovery.",
+        "arXiv:2111.13646.",
+        "URL https://arxiv.org/abs/2111.13646.")
+)

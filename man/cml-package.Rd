@@ -37,11 +37,8 @@ noise = rnorm(N,0,.1)
 d = dist(cbind(u.true, v.true, noise))
 
 # Conditional MDS
-u.cmds = condMDS(d, v.true, 1, method='matrix')$U
+u.cmds = condMDS(d, v.true, 1)$U
 
 # Conditional ISOMAP
-u.cisomap = condIsomap(d, v.true, 1, k = 20, method='matrix')$U
-
-## to reproduce the results for the kinship terms example in Bui (2021),
-## use set.seed(1) before every call of condMDS() or condIsomap()
+u.cisomap = condIsomap(d, v.true, 1, k = 20)$U
 }

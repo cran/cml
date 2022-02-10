@@ -1,11 +1,12 @@
-condSmacof_matrix <- function (d, V, u.dim, W = NULL, it.max = 1000, gamma = 1e-03,
-                               U.start = NULL, B.start = NULL)
+condSmacof_matrix <- function (d, V, u.dim, W = NULL, it.max = 1000, gamma = 1e-05,
+                               init = c('none', 'user'),
+                               U.start, B.start)
 {
   p <- u.dim
   q <- dim(V)[2]
   N <- nrow(as.matrix(d))
   if (p > (N - 1 - q))
-    stop("Max u.dim is N-1-vdim!")
+    stop("Max u.dim is N-1-ncol(V)!")
 
   tV <- t(V)
   one_n_t <- t(rep(1,N))
@@ -21,15 +22,24 @@ condSmacof_matrix <- function (d, V, u.dim, W = NULL, it.max = 1000, gamma = 1e-
   Gp <- ginv(G)
   GptV <- Gp %*% tV
 
-  if (is.null(U.start))
-    U.start <- matrix(runif(N * p, min = -1), ncol = p)
-
-  U <- U.start
-
-  if (is.null(B.start))
-    B <- diag(rep(1,q))
+  init <- match.arg(init, c('none', 'user'))
+  if (init == 'none') {
+    B.start <- diag(rep(1,q))
+  } else {
+    if (is.null(B.start))
+      stop('B.start needs to be provided when init = "user"!')
+  }
+  B <- B.start
 
   V.tilda <- V %*% B
+
+  if (init == 'none') {
+    U.start <- matrix(runif(N * p, min = -1), ncol = p)
+  } else {
+    U.start <- matrix(U.start)
+  }
+  U <- U.start
+
 
   eta.d <- sum(w*d^2)
   dz <- condDist(U, V.tilda, one_n_t)
@@ -38,6 +48,7 @@ condSmacof_matrix <- function (d, V, u.dim, W = NULL, it.max = 1000, gamma = 1e-
     sum(diag(t(U)%*%H%*%U)) + sum(diag(t(V.tilda) %*% H %*% V.tilda)) -
     2*sum(w*d*dz)
 
+  gamma <- gamma*eta.d
   if (is.null(W)) {
     for (iter in 2:it.max) {
       cz <- -w*d/dz
@@ -81,5 +92,8 @@ condSmacof_matrix <- function (d, V, u.dim, W = NULL, it.max = 1000, gamma = 1e-
     sigma <- sigma[1:iter]
   }
 
-  list(U = U, B = B, sigma = sigma, U.start = U.start, B.start = B.start)
+  stress <- sigma[iter]/eta.d
+
+  list(U = U, B = B, stress = stress, sigma = sigma, init = init,
+       U.start = U.start, B.start = B.start)
 }

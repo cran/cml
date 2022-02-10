@@ -1,11 +1,13 @@
-condSmacof_vector <- function(d, V, u.dim, W = NULL, it.max = 1000, gamma = 1e-03,
-                              U.start = NULL, b.start = NULL)
+condSmacof_vector <- function(d, V, u.dim, W = NULL,
+                              it.max = 1000, gamma = 1e-05,
+                              init = c('none', 'user'),
+                              U.start, b.start)
 {
   p <- u.dim
   q <- dim(V)[2]
   N <- nrow(as.matrix(d))
   if (p > (N - 1 - q))
-    stop("Max u.dim is N-1-vdim!")
+    stop("Max u.dim is N-1-ncol(V)!")
 
   tV <- t(V)
   one_n_t <- t(rep(1,N))
@@ -18,16 +20,27 @@ condSmacof_vector <- function(d, V, u.dim, W = NULL, it.max = 1000, gamma = 1e-0
   H <- diag(rowSums(W)) - W
   g <- diag(x = tV %*% H %*% V)
 
-  if (is.null(U.start)) {
-    U.start <- matrix(runif(N * p, min = -1), ncol = p)
-  }
-  U <- U.start
 
-  if (is.null(b.start))
-    b <- rep(1,q)
+  init <- match.arg(init, c('none', 'user'))
+  if (init == 'none') {
+    b.start <- rep(1,q)
+  } else {
+    if (is.null(b.start))
+      stop('b.start needs to be provided when init = "user"!')
+  }
+  b <- b.start
 
   b2 <- b^2
   V.tilda2 <- V %*% (b2*tV)
+
+  if (init == 'none') {
+    U.start <- matrix(runif(N * p, min = -1), ncol = p)
+  } else {
+    if (is.null(b.start))
+      stop('b.start needs to be provided when init = "user"!')
+    U.start <- as.matrix(U.start)
+  }
+  U <- U.start
 
   eta.d <- sum(w*d^2)
   dz <- condDist2(U, V.tilda2, one_n_t)
@@ -36,6 +49,7 @@ condSmacof_vector <- function(d, V, u.dim, W = NULL, it.max = 1000, gamma = 1e-0
     sum(diag(t(U)%*%H%*%U)) + sum(b2*g) -
     2*sum(w*d*dz)
 
+  gamma <- gamma*eta.d
   if (is.null(W)) {
     for (iter in 2:it.max) {
       cz <- -w*d/dz
@@ -83,7 +97,10 @@ condSmacof_vector <- function(d, V, u.dim, W = NULL, it.max = 1000, gamma = 1e-0
     sigma <- sigma[1:iter]
   }
 
-  list(U = U, b = b, sigma = sigma, U.start = U.start, b.start = b.start)
+  stress <- sigma[iter]/eta.d
+
+  list(U = U, b = b, stress = stress, sigma = sigma, init = init,
+       U.start = U.start, b.start = b.start)
 }
 
 

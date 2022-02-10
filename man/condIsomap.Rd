@@ -10,8 +10,11 @@ Finds a low-dimensional manifold embedding of a given distance/dissimilarity mat
 }
 
 \usage{
-condIsomap(d, V, u.dim, epsilon = NULL, k, W = NULL, method = c('matrix', 'vector'),
-           it.max = 1000, gamma = 1e-03, U.start = NULL, B.start = NULL,...) }
+condIsomap(d, V, u.dim, epsilon = NULL, k, W = NULL,
+           method = c('matrix', 'vector'),
+           it.max = 1000, gamma = 1e-05,
+           init = c('none', 'user'), U.start = NULL,
+           B.start = NULL, b.start = NULL, ...) }
 
 \arguments{
   \item{d}{
@@ -39,13 +42,18 @@ if \code{matrix}, conditional SMACOF with a full B matrix will be used. If \code
 the max number of conditional SMACOF iterations.
 }
   \item{gamma}{
-conditional SMACOF stops early if the conditional stress reduction is less than \code{gamma}
+conditional SMACOF stops early if the reduction of normalized conditional stress is less than \code{gamma}
+}
+  \item{init}{
+method to initialize the starting values for the embedding and B (or b).
 }
   \item{U.start}{
-starting values for the embedding.
+user-defined starting values for the embedding (when \code{U.init = 'user'})
 }
   \item{B.start}{
-starting values for the \code{B} matrix.
+starting \code{B} matrix.
+}
+  \item{b.start}{starting diagonal values of the \code{B} matrix (which is restricted to be diagonal).
 }
   \item{...}{
 other arguments for the \code{isomap{vegan}} function.
@@ -55,7 +63,9 @@ other arguments for the \code{isomap{vegan}} function.
 \value{
 \item{U }{the embedding result.}
 \item{B }{the estimated \code{B} matrix.}
+\item{stress }{Normalized conditional stress value.}
 \item{sigma }{the conditional stress value at each iteration.}
+\item{init }{method to initialize the starting values for the embedding and B (or b).}
 \item{U.start }{the starting values for the embedding.}
 \item{B.start }{starting values for the \code{B} matrix, if \code{method="matrix"}.}
 \item{b.start }{the starting values of the \code{B} matrix (which is restricted to be diagonal), if \code{method="vector"}.}

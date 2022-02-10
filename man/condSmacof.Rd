@@ -8,10 +8,10 @@ Conditional SMACOF
 Conditional SMACOF algorithms. Intended for internal usage.
 }
 \usage{
-condSmacof_matrix(d, V, u.dim, W = NULL, it.max = 1000, gamma = 1e-03,
-                               U.start = NULL, B.start = NULL)
-condSmacof_vector(d, V, u.dim, W = NULL, it.max = 1000, gamma = 1e-03,
-                               U.start = NULL, b.start = NULL)
+condSmacof_matrix(d, V, u.dim, W = NULL, it.max = 1000, gamma = 1e-05,
+                  init = c('none', 'user'), U.start, B.start)
+condSmacof_vector(d, V, u.dim, W = NULL, it.max = 1000, gamma = 1e-05,
+                  init = c('none', 'user'), U.start, b.start)
 }
 \arguments{
   \item{d}{
@@ -30,14 +30,17 @@ an \emph{N}x\emph{N} weight matrix. If not given, a matrix of ones will be used.
 the max number of conditional SMACOF iterations.
 }
   \item{gamma}{
-conditional SMACOF stops early if the conditional stress reduction is less than \code{gamma}
+conditional SMACOF stops early if the  reduction of normalized conditional stress is less than \code{gamma}
+}
+  \item{init}{
+method to initialize the starting values for the embedding and B (or b).
 }
   \item{U.start}{
-starting values for the embedding.
+user-defined starting values for the embedding (when \code{U.init = 'user'})
 }
-  \item{B.start}{\code{condSmacof_matrix()} only; starting values for the \code{B} matrix.
+  \item{B.start}{\code{condSmacof_matrix()} only; starting \code{B} matrix.
 }
-  \item{b.start}{for \code{condSmacof_vector()} only; starting values of the \code{B} matrix (which is restricted to be diagonal).
+  \item{b.start}{for \code{condSmacof_vector()} only; starting diagonal values of the \code{B} matrix (which is restricted to be diagonal).
 }
 }
 \details{
@@ -46,10 +49,12 @@ starting values for the embedding.
 \value{
 \item{U }{the embedding result.}
 \item{B }{the estimated \code{B} matrix.}
+\item{stress }{Normalized conditional stress value.}
 \item{sigma }{the conditional stress value at each iteration.}
+\item{init }{method to initialize the starting values for the embedding and B (or b).}
 \item{U.start }{the starting values for the embedding.}
-\item{B.start }{the starting values for the \code{B} matrix, if using \code{condSmacof_matrix()}}
-\item{b.start }{the starting values of the \code{B} matrix (which is restricted to be diagonal), if using \code{condSmacof_vector()}.}
+\item{B.start }{the starting \code{B} matrix, if using \code{condSmacof_matrix()}}
+\item{b.start }{the starting diagonal values of the \code{B} matrix (which is restricted to be diagonal), if using \code{condSmacof_vector()}.}
 
 }
 \references{
