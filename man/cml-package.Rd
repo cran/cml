@@ -8,7 +8,7 @@ Conditional Manifold Learning
 Find a low-dimensional embedding of high-dimensional data, conditioning on auxiliary manifold information. The current version supports conditional MDS and conditional ISOMAP.
 
 Please cite this package as follows:
-Bui, A.T. (2021). Conditional Manifold Learning. arXiv.
+Bui, A.T. (2021). Dimension Reduction with Prior Information for Knowledge Discovery. arXiv:2111.13646. URL: https://arxiv.org/abs/2111.13646.
 }
 \details{
 Brief descriptions of the main functions of the package are provided below:
@@ -19,7 +19,7 @@ Brief descriptions of the main functions of the package are provided below:
 }
 
 \references{
-Bui, A.T. (2021). Conditional Manifold Learning. arXiv:2111.13646 [stat.ML]. https://arxiv.org/abs/2111.13646
+Bui, A.T. (2021). Dimension Reduction with Prior Information for Knowledge Discovery. arXiv:2111.13646. URL: https://arxiv.org/abs/2111.13646.
 }
 \author{
 Anh Tuan Bui
@@ -27,18 +27,28 @@ Anh Tuan Bui
 Maintainer: Anh Tuan Bui <atbui@u.northwestern.edu>
 }
 \examples{
-# generate toy data
-N = 100
-u.dim = 1
-v.dim = 2
-u.true = matrix(runif(N*u.dim), N, u.dim)
-v.true = matrix(runif(N*v.dim), N, v.dim)
-noise = rnorm(N,0,.1)
-d = dist(cbind(u.true, v.true, noise))
+# Generate car-brand perception data
+factor.weights <- c(90, 88, 83, 82, 81, 70, 68)/562
+N <- 100
+set.seed(1)
+data <- matrix(runif(N*7), N, 7)
+colnames(data) <- c('Quality', 'Safety', 'Value',	'Performance', 'Eco', 'Design', 'Tech')
+rownames(data) <- paste('Brand', 1:N)
+data.hat <- data + matrix(rnorm(N*7), N, 7)*data*.05
+data.weighted <- t(apply(data, 1, function(x) x*factor.weights))
+d <- dist(data.weighted)
+d.hat <- d + rnorm(length(d))*d*.05
 
-# Conditional MDS
-u.cmds = condMDS(d, v.true, 1)$U
+# Conditional MDS, using the first 4 factors as known features
+u.cmds = condMDS(d.hat, data.hat[,1:4], 3)
+u.cmds$B # compare with diag(factor.weights[1:4])
+ccor(data[,5:7], u.cmds$U)$cancor # canonical correlations
 
-# Conditional ISOMAP
-u.cisomap = condIsomap(d, v.true, 1, k = 20)$U
+# Conditional ISOMAP, using the first 4 factors as known features
+u.cisomap = condIsomap(d.hat, data.hat[,1:4], 3, k = 20)
+u.cisomap$B # compare with diag(factor.weights[1:4])
+ccor(data[,5:7], u.cisomap$U)$cancor # canonical correlations
+
+# NOTE: Setting method='vector' in the above calls may slightly improve the
+# results because the first 4 factors are uncorrelated.
 }

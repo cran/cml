@@ -1,5 +1,5 @@
 exportPattern("^[[:alpha:]]+")
-export(condMDS, condIsomap)
+export(condMDS, condIsomap, ccor)
 import(stats)
 importFrom("vegan", "isomapdist")
 importFrom("MASS", "ginv")

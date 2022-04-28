@@ -5,7 +5,7 @@ condMDS <- function (d, V, u.dim, W = NULL, method = c('matrix', 'vector'),
 {
   d <- as.dist(d)
   V <- as.matrix(V)
-  q <- dim(V)[2]
+  q <- ncol(V)
   if (q > 1) {
     method <- match.arg(method, c('matrix', 'vector'))
   } else if (q == 1) {

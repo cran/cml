@@ -3,54 +3,49 @@ condSmacof_vector <- function(d, V, u.dim, W = NULL,
                               init = c('none', 'user'),
                               U.start, b.start)
 {
-  p <- u.dim
-  q <- dim(V)[2]
-  N <- nrow(as.matrix(d))
-  if (p > (N - 1 - q))
+  q <- ncol(V)
+  N <- nrow(V)
+  if (u.dim > (N - 1 - q))
     stop("Max u.dim is N-1-ncol(V)!")
 
   tV <- t(V)
   one_n_t <- t(rep(1,N))
 
+  init <- match.arg(init, c('none', 'user'))
+  if (init == 'none') {
+    b.start <- rep(1,q)
+    U.start <- matrix(runif(N * u.dim, min = -1), ncol = u.dim)
+  } else {
+    if (is.null(b.start) | is.null(U.start)) {
+      stop('U.start and b.start need to be provided when init = "user"!')
+    } else {
+      U.start <- as.matrix(U.start)
+      b.start <- c(b.start)
+    }
+  }
+  b <- b.start
+  U <- U.start
+
   if (is.null(W)) {
     W <- matrix(1, N, N)
     W[is.na(as.matrix(d))] <- 0
+    flag <- TRUE
+  } else {
+    flag <- FALSE
   }
   w <- as.dist(W)
   H <- diag(rowSums(W)) - W
   g <- diag(x = tV %*% H %*% V)
 
-
-  init <- match.arg(init, c('none', 'user'))
-  if (init == 'none') {
-    b.start <- rep(1,q)
-  } else {
-    if (is.null(b.start))
-      stop('b.start needs to be provided when init = "user"!')
-  }
-  b <- b.start
-
   b2 <- b^2
-  V.tilda2 <- V %*% (b2*tV)
-
-  if (init == 'none') {
-    U.start <- matrix(runif(N * p, min = -1), ncol = p)
-  } else {
-    if (is.null(b.start))
-      stop('b.start needs to be provided when init = "user"!')
-    U.start <- as.matrix(U.start)
-  }
-  U <- U.start
-
   eta.d <- sum(w*d^2)
-  dz <- condDist2(U, V.tilda2, one_n_t)
+  dz <- condDist2(U, V %*% (b2*tV), one_n_t)
   sigma <- rep(0, it.max)
-  sigma[1] <- eta.d +
-    sum(diag(t(U)%*%H%*%U)) + sum(b2*g) -
-    2*sum(w*d*dz)
+  sigma[1] <- eta.d + sum(diag(t(U)%*%H%*%U)) +
+    sum(b2*g) - 2*sum(w*d*dz)
 
   gamma <- gamma*eta.d
-  if (is.null(W)) {
+  if (flag) {
     for (iter in 2:it.max) {
       cz <- -w*d/dz
       cz[which(cz == Inf)] <- 0
@@ -61,8 +56,7 @@ condSmacof_vector <- function(d, V, u.dim, W = NULL,
       t = diag(tV %*% cz %*% V)
       b <- t*b/g
       b2 <- b^2
-      V.tilda2 <- V %*% (b2*tV)
-      dz <- condDist2(U, V.tilda2, one_n_t)
+      dz <- condDist2(U, V %*% (b2*tV), one_n_t)
       sigma[iter] <- eta.d +
         sum(diag(t(U)%*%H%*%U)) + sum(b2*g) -
         2*sum(w*d*dz)
@@ -81,11 +75,9 @@ condSmacof_vector <- function(d, V, u.dim, W = NULL,
       t = diag(tV %*% cz %*% V)
       b <- t*b/g
       b2 <- b^2
-      V.tilda2 <- V %*% (b2*tV)
-      dz <- condDist2(U, V.tilda2, one_n_t)
-      sigma[iter] <- eta.d +
-        sum(diag(t(U)%*%H%*%U)) + sum(b2*g) -
-        2*sum(w*d*dz)
+      dz <- condDist2(U, V %*% (b2*tV), one_n_t)
+      sigma[iter] <- eta.d + sum(diag(t(U)%*%H%*%U)) +
+        sum(b2*g) - 2*sum(w*d*dz)
       if (sigma[iter - 1] - sigma[iter] < gamma)
         break()
     }

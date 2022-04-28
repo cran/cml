@@ -24,7 +24,7 @@ an \emph{N}x\emph{q} matrix of \emph{q} manifold auxiliary parameter values of t
 the embedding dimension.
 }
 \item{W}{
-an \emph{N}x\emph{N} weight matrix. If not given, a matrix of ones will be used.
+an \emph{N}x\emph{N} symmetric weight matrix. If not given, a matrix of ones will be used.
 }
   \item{it.max}{
 the max number of conditional SMACOF iterations.
@@ -58,7 +58,7 @@ user-defined starting values for the embedding (when \code{U.init = 'user'})
 
 }
 \references{
-Bui, A.T. (2021). Conditional Manifold Learning. arXiv:2111.13646 [stat.ML]. https://arxiv.org/abs/2111.13646
+Bui, A.T. (2021). Dimension Reduction with Prior Information for Knowledge Discovery. arXiv:2111.13646. URL: https://arxiv.org/abs/2111.13646.
 }
 \author{
 Anh Tuan Bui

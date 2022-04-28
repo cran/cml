@@ -33,7 +33,7 @@ shortest dissimilarity retained.
 Number of shortest dissimilarities retained for a point. If both \code{epsilon} and \code{k} are given, \code{epsilon} will be used.
 }
 \item{W}{
-an \emph{N}x\emph{N} weight matrix. If not given, a matrix of ones will be used.
+an \emph{N}x\emph{N} symmetric weight matrix. If not given, a matrix of ones will be used.
 }
   \item{method}{
 if \code{matrix}, conditional SMACOF with a full B matrix will be used. If \code{vector}, conditional SMACOF with a diagonal B matrix will be used. The latter is more efficient for large \emph{q}.
@@ -71,7 +71,7 @@ other arguments for the \code{isomap{vegan}} function.
 \item{b.start }{the starting values of the \code{B} matrix (which is restricted to be diagonal), if \code{method="vector"}.}
 }
 \references{
-Bui, A.T. (2021). Conditional Manifold Learning. arXiv:2111.13646 [stat.ML]. https://arxiv.org/abs/2111.13646
+Bui, A.T. (2021). Dimension Reduction with Prior Information for Knowledge Discovery. arXiv:2111.13646. URL: https://arxiv.org/abs/2111.13646.
 }
 \author{
 Anh Tuan Bui
