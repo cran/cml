@@ -10,21 +10,8 @@ condIsomap <- function (d, V, u.dim, epsilon = NULL, k, W = NULL,
     d <- vegan::isomapdist(d, epsilon=epsilon,...)
   }
 
-  V <- as.matrix(V)
-  q <- dim(V)[2]
-  if (q > 1) {
-    method <- match.arg(method, c('matrix', 'vector'))
-  } else if (q == 1) {
-    method <- 'vector'
-  } else {
-    stop('V should be a matrix!')
-  }
-
-  if (method == 'matrix') {
-    return(condSmacof_matrix(d, V, u.dim, W = W, it.max=it.max, gamma=gamma,
-                             init = init, U.start = U.start, B.start = B.start))
-  } else if (method == 'vector') {
-    return(condSmacof_vector(d, V, u.dim, W = W, it.max=it.max, gamma=gamma,
-                             init = init, U.start=U.start, b.start = b.start))
-  }
+  condMDS(d = d, V = V, u.dim = u.dim, W = W,
+          method = method, it.max = it.max, gamma = gamma,
+          init = init, U.start = U.start,
+          B.start = B.start, b.start = b.start)
 }

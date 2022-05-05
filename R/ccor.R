@@ -9,7 +9,7 @@ ccor <- function(x, y) {
   x.eig = eigen(cov.x.inv %*% cov.xy %*% cov.y.inv %*% cov.yx)
   y.eig = eigen(cov.y.inv %*% cov.yx %*% cov.x.inv %*% cov.xy)
 
-  list(cancor = x.eig$values,
+  list(cancor = sqrt(x.eig$values),
        xcoef = x.eig$vectors,
        ycoef = y.eig$vectors)
 }
