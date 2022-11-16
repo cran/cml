@@ -6,14 +6,15 @@ Conditional Multidimensional Scaling
 }
 
 \description{
-Finds a low-dimensional embedding of a given distance/dissimilarity matrix, conditioning on auxiliary manifold parameters. The method uses conditional SMACOF to optimize its conditional stress function.
+Wrapper of \code{condSmacof}, which finds a low-dimensional embedding of a given distance/dissimilarity matrix, conditioning on available manifold information.
 }
 
 \usage{
-condMDS(d, V, u.dim, W = NULL, method = c('matrix', 'vector'),
+condMDS(d, V, u.dim, W,
+        method = c('matrix', 'vector'),
         it.max = 1000, gamma = 1e-05,
-        init = c('none', 'user'), U.start = NULL,
-        B.start = NULL, b.start = NULL) }
+        init = c('none', 'eigen', 'user'),
+        U.start, B.start) }
 
 \arguments{
   \item{d}{
@@ -25,11 +26,11 @@ an \emph{N}x\emph{q} matrix of \emph{q} manifold auxiliary parameter values of t
   \item{u.dim}{
 the embedding dimension.
 }
-\item{W}{
+  \item{W}{
 an \emph{N}x\emph{N} symmetric weight matrix. If not given, a matrix of ones will be used.
 }
   \item{method}{
-if \code{matrix}, conditional SMACOF with a full B matrix will be used. If \code{vector}, conditional SMACOF with a diagonal B matrix will be used. The latter is more efficient for large \emph{q}.
+if \code{matrix}, there are no restrictions for the B matrix . If \code{vector}, the B matrix is restricted to be diagonal. The latter is more efficient for large \emph{q}.
 }
   \item{it.max}{
 the max number of conditional SMACOF iterations.
@@ -38,15 +39,13 @@ the max number of conditional SMACOF iterations.
 conditional SMACOF stops early if the reduction of normalized conditional stress is less than \code{gamma}
 }
   \item{init}{
-method to initialize the starting values for the embedding and B (or b).
+initialization method.
 }
   \item{U.start}{
-user-defined starting values for the embedding (when \code{U.init = 'user'})
+user-defined starting values for the embedding (when \code{init = 'user'})
 }
   \item{B.start}{
 starting \code{B} matrix.
-}
-  \item{b.start}{starting diagonal values of the \code{B} matrix (which is restricted to be diagonal).
 }
 }
 
@@ -55,20 +54,22 @@ starting \code{B} matrix.
 \item{B }{the estimated \code{B} matrix.}
 \item{stress }{Normalized conditional stress value.}
 \item{sigma }{the conditional stress value at each iteration.}
-\item{init }{method to initialize the starting values for the embedding and B (or b).}
+\item{init }{the value of the \code{init} argument.}
 \item{U.start }{the starting values for the embedding.}
-\item{B.start }{starting values for the \code{B} matrix, if \code{method="matrix"}.}
-\item{b.start }{the starting values of the \code{B} matrix (which is restricted to be diagonal), if \code{method="vector"}.}
+\item{B.start }{starting values for the \code{B} matrix.}
+\item{method }{the value of the \code{method} argument.}
 }
 \references{
-Bui, A.T. (2021). Dimension Reduction with Prior Information for Knowledge Discovery. arXiv:2111.13646. URL: https://arxiv.org/abs/2111.13646.
+Bui, A.T. (2021). Dimension Reduction with Prior Information for Knowledge Discovery. arXiv:2111.13646. https://arxiv.org/abs/2111.13646.
+
+Bui, A. T. (2022). A Closed-Form Solution for Conditional Multidimensional Scaling. Pattern Recognition Letters. https://doi.org/10.1016/j.patrec.2022.11.007
 }
 \author{
 Anh Tuan Bui
 }
 
 \seealso{
-\code{\link{condIsomap}}
+\code{\link{condSmacof}, \link{condMDSeigen}, \link{condIsomap}}
 }
 \examples{
 # see help(cml)

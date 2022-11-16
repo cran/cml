@@ -1,4 +1,4 @@
-citHeader("To cite cml in publications use:")
+citHeader("To cite cml in publications, please use:")
 
 citEntry(entry = "Article",
   title        = "Dimension Reduction with Prior Information for Knowledge Discovery",
@@ -11,5 +11,19 @@ citEntry(entry = "Article",
   paste("Anh Tuan Bui (2021).",
         "Dimension Reduction with Prior Information for Knowledge Discovery.",
         "arXiv:2111.13646.",
-        "URL https://arxiv.org/abs/2111.13646.")
+        "https://arxiv.org/abs/2111.13646.")
+)
+
+citEntry(entry = "Article",
+  title        = "A Closed-Form Solution for Conditional Multidimensional Scaling",
+  author       = personList(as.person("Anh Tuan Bui")),
+  journal      = "Pattern Recognition Letters",
+  year         = "2022",
+  url          = "https://doi.org/10.1016/j.patrec.2022.11.007",
+
+  textVersion  =
+  paste("Anh Tuan Bui (2022).",
+        "A Closed-Form Solution for Conditional Multidimensional Scaling.",
+        "Pattern Recognition Letters.",
+        "https://doi.org/10.1016/j.patrec.2022.11.007.")
 )

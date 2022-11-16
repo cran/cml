@@ -1,22 +1,28 @@
 \name{ccor}
 \alias{ccor}
 \title{
-Canonical Correlation
+Canonical Correlations
 }
 \description{
-Find the canonical correlations of two multivariate datasets.
+Computes canonical correlations for two sets of multivariate data \code{x} and \code{y}.
 }
 \usage{
 ccor(x, y)
 }
 \arguments{
-  \item{x}{ the first dataset.}
-  \item{y}{ the second dataset.}
+  \item{x}{
+the first multivariate dataset.
+}
+  \item{y}{
+the second multivariate dataset.
+}
 }
 \value{
-\item{cancor }{ canonical correlations.}
-\item{xcoef }{ the columns of this matrix contain the coefficients for the first dataset.}
-\item{ycoef }{the columns of this matrix contain the coefficients for the second dataset.}}
+a list of the following components:
+\item{cancor }{a vector of canonical correlations.}
+\item{xcoef }{a matrix, each column of which is the vector of coefficients of x to produce the corresponding canonical covariate.}
+\item{ycoef }{a matrix, each column of which is the vector of coefficients of y to produce the corresponding canonical covariate.}
+}
 \author{
 Anh Tuan Bui
 }

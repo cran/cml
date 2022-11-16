@@ -5,7 +5,7 @@
 Conditional Euclidean distance
 }
 \description{
-Internal functions for \code{condSmacof_matrix()} and \code{condSmacof_vector()}.
+Internal functions.
 }
 \usage{
 condDist(U, V.tilda, one_n_t=t(rep(1,nrow(U))))
@@ -21,7 +21,7 @@ condDist2(U, V.tilda2, one_n_t=t(rep(1,nrow(U))))
 a \code{dist} object.
 }
 \references{
-Bui, A.T. (2021). Dimension Reduction with Prior Information for Knowledge Discovery. arXiv:2111.13646. URL: https://arxiv.org/abs/2111.13646.
+Bui, A.T. (2021). Dimension Reduction with Prior Information for Knowledge Discovery. arXiv:2111.13646. https://arxiv.org/abs/2111.13646.
 }
 \author{
 Anh Tuan Bui
