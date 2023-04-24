@@ -11,7 +11,7 @@ Please cite this package as follows:
 
 Bui, A.T. (2021). Dimension Reduction with Prior Information for Knowledge Discovery. arXiv:2111.13646. https://arxiv.org/abs/2111.13646
 
-Bui, A. T. (2022). A Closed-Form Solution for Conditional Multidimensional Scaling. Pattern Recognition Letters. https://doi.org/10.1016/j.patrec.2022.11.007
+Bui, A. T. (2022). A Closed-Form Solution for Conditional Multidimensional Scaling. Pattern Recognition Letters 164, 148-152. https://doi.org/10.1016/j.patrec.2022.11.007
 }
 \details{
 Brief descriptions of the main functions of the package are provided below:
@@ -26,7 +26,7 @@ Brief descriptions of the main functions of the package are provided below:
 \references{
 Bui, A.T. (2021). Dimension Reduction with Prior Information for Knowledge Discovery. arXiv:2111.13646. https://arxiv.org/abs/2111.13646.
 
-Bui, A. T. (2022). A Closed-Form Solution for Conditional Multidimensional Scaling. Pattern Recognition Letters. https://doi.org/10.1016/j.patrec.2022.11.007
+Bui, A. T. (2022). A Closed-Form Solution for Conditional Multidimensional Scaling. Pattern Recognition Letters 164, 148-152. https://doi.org/10.1016/j.patrec.2022.11.007
 
 }
 \author{

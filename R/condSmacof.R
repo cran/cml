@@ -1,5 +1,5 @@
 condSmacof <- function (d, V, u.dim, W,
-                        method = c('matrix', 'vector'),
+                        method = c('matrix', 'vector'), exact = TRUE,
                         it.max = 1000, gamma = 1e-05,
                         init = c('none', 'eigen', 'user'),
                         U.start, B.start)
@@ -31,14 +31,20 @@ condSmacof <- function (d, V, u.dim, W,
 
   if (missing(W)) {
     W <- matrix(1, N, N)
-    W[is.na(as.matrix(d))] <- 0
-    H <- diag(rowSums(W)) - W
-    Hp <- H/(N^2)
-  } else {
-    H <- diag(rowSums(W)) - W
-    Hp <- solve(H + 1) - N^(-2)
   }
+  W[is.na(as.matrix(d))] <- 0
   w <- as.dist(W)
+
+  H <- diag(rowSums(W)) - W
+
+  if (any(W!=1)) {
+    exact <- TRUE
+    Hp <- solve(H + 1) - N^(-2)
+  } else {
+    if (exact) {
+      Hp <- H/(N^2)
+    }
+  }
 
   U <- U.start
   eta.d <- sum(w*d^2)
@@ -54,17 +60,32 @@ condSmacof <- function (d, V, u.dim, W,
       sum(diag(t(V.tilda) %*% H %*% V.tilda)) - 2*sum(w*d*dz)
     GptV <- mpinv(t(V) %*% H %*% V) %*% t(V)
 
-    for (iter in 2:it.max) {
-      cz1 <- cz(w, d, dz)
-      U <- Hp %*% cz1 %*% U
-      B <- GptV %*% cz1 %*% V.tilda
-      V.tilda <- V %*% B
-      dz <- condDist(U, V.tilda, one_n_t)
-      sigma[iter] <- eta.d +
-        sum(diag(t(U)%*%H%*%U)) + sum(diag(t(V.tilda) %*% H %*% V.tilda)) -
-        2*sum(w*d*dz)
-      if (sigma[iter - 1] - sigma[iter] < gamma)
-        break()
+    if (exact) {
+      for (iter in 2:it.max) {
+        cz1 <- cz(w, d, dz)
+        U <- Hp %*% (cz1 %*% U)
+        B <- GptV %*% cz1 %*% V.tilda
+        V.tilda <- V %*% B
+        dz <- condDist(U, V.tilda, one_n_t)
+        sigma[iter] <- eta.d +
+          sum(diag(t(U)%*%H%*%U)) + sum(diag(t(V.tilda) %*% H %*% V.tilda)) -
+          2*sum(w*d*dz)
+        if (sigma[iter - 1] - sigma[iter] < gamma)
+          break()
+      }
+    } else {
+      for (iter in 2:it.max) {
+        cz1 <- cz(w, d, dz)
+        U <- cz1 %*% U / N
+        B <- GptV %*% cz1 %*% V.tilda
+        V.tilda <- V %*% B
+        dz <- condDist(U, V.tilda, one_n_t)
+        sigma[iter] <- eta.d +
+          sum(diag(t(U)%*%H%*%U)) + sum(diag(t(V.tilda) %*% H %*% V.tilda)) -
+          2*sum(w*d*dz)
+        if (sigma[iter - 1] - sigma[iter] < gamma)
+          break()
+      }
     }
   } else if (method == 'vector') {
     b <- diag(B.start)
@@ -74,16 +95,31 @@ condSmacof <- function (d, V, u.dim, W,
     dz <- condDist2(U, V %*% (b2*tV), one_n_t)
     sigma[1] <- eta.d + sum(diag(t(U)%*%H%*%U)) + sum(b2*g) - 2*sum(w*d*dz)
 
-    for (iter in 2:it.max) {
-      cz1 <- cz(w, d, dz)
-      U <- Hp %*% cz1 %*% U
-      b <- diag(tV %*% cz1 %*% V)*b/g
-      b2 <- b^2
-      dz <- condDist2(U, V %*% (b2*tV), one_n_t)
-      sigma[iter] <- eta.d + sum(diag(t(U)%*%H%*%U)) + sum(b2*g) - 2*sum(w*d*dz)
-      if (sigma[iter - 1] - sigma[iter] < gamma) {
-        B <- diag(b)
-        break()
+    if (exact) {
+      for (iter in 2:it.max) {
+        cz1 <- cz(w, d, dz)
+        U <- Hp %*% (cz1 %*% U)
+        b <- diag(tV %*% cz1 %*% V)*b/g
+        b2 <- b^2
+        dz <- condDist2(U, V %*% (b2*tV), one_n_t)
+        sigma[iter] <- eta.d + sum(diag(t(U)%*%H%*%U)) + sum(b2*g) - 2*sum(w*d*dz)
+        if (sigma[iter - 1] - sigma[iter] < gamma) {
+          B <- diag(b)
+          break()
+        }
+      }
+    } else {
+      for (iter in 2:it.max) {
+        cz1 <- cz(w, d, dz)
+        U <- cz1 %*% U / N
+        b <- diag(tV %*% cz1 %*% V)*b/g
+        b2 <- b^2
+        dz <- condDist2(U, V %*% (b2*tV), one_n_t)
+        sigma[iter] <- eta.d + sum(diag(t(U)%*%H%*%U)) + sum(b2*g) - 2*sum(w*d*dz)
+        if (sigma[iter - 1] - sigma[iter] < gamma) {
+          B <- diag(b)
+          break()
+        }
       }
     }
   }
@@ -95,5 +131,5 @@ condSmacof <- function (d, V, u.dim, W,
   }
 
   list(U = U, B = B, stress = sigma[iter]/eta.d, sigma = sigma, init = init,
-       U.start = U.start, B.start = B.start, method = method)
+       U.start = U.start, B.start = B.start, method = method, exact = exact)
 }

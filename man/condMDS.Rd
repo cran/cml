@@ -11,7 +11,7 @@ Wrapper of \code{condSmacof}, which finds a low-dimensional embedding of a given
 
 \usage{
 condMDS(d, V, u.dim, W,
-        method = c('matrix', 'vector'),
+        method = c('matrix', 'vector'), exact = TRUE,
         it.max = 1000, gamma = 1e-05,
         init = c('none', 'eigen', 'user'),
         U.start, B.start) }
@@ -31,6 +31,9 @@ an \emph{N}x\emph{N} symmetric weight matrix. If not given, a matrix of ones wil
 }
   \item{method}{
 if \code{matrix}, there are no restrictions for the B matrix . If \code{vector}, the B matrix is restricted to be diagonal. The latter is more efficient for large \emph{q}.
+}
+  \item{exact}{
+only relevant if \code{W} is not given. In this case, if \code{exact == FALSE}, \code{U} is updated by the large-\emph{N} approximation formula.
 }
   \item{it.max}{
 the max number of conditional SMACOF iterations.
@@ -58,11 +61,12 @@ starting \code{B} matrix.
 \item{U.start }{the starting values for the embedding.}
 \item{B.start }{starting values for the \code{B} matrix.}
 \item{method }{the value of the \code{method} argument.}
+\item{exact }{the value of the \code{exact} argument.}
 }
 \references{
 Bui, A.T. (2021). Dimension Reduction with Prior Information for Knowledge Discovery. arXiv:2111.13646. https://arxiv.org/abs/2111.13646.
 
-Bui, A. T. (2022). A Closed-Form Solution for Conditional Multidimensional Scaling. Pattern Recognition Letters. https://doi.org/10.1016/j.patrec.2022.11.007
+Bui, A. T. (2022). A Closed-Form Solution for Conditional Multidimensional Scaling. Pattern Recognition Letters 164, 148-152. https://doi.org/10.1016/j.patrec.2022.11.007
 }
 \author{
 Anh Tuan Bui

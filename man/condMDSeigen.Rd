@@ -29,7 +29,7 @@ if \code{matrix}, there are no restrictions for the B matrix . If \code{vector},
 \item{stress }{the corresponding normalized conditional stress value of the solution.}
 }
 \references{
-Bui, A. T. (2022). A Closed-Form Solution for Conditional Multidimensional Scaling. Pattern Recognition Letters. https://doi.org/10.1016/j.patrec.2022.11.007
+Bui, A. T. (2022). A Closed-Form Solution for Conditional Multidimensional Scaling. Pattern Recognition Letters 164, 148-152. https://doi.org/10.1016/j.patrec.2022.11.007
 }
 \author{
 Anh Tuan Bui

@@ -1,10 +1,13 @@
 citHeader("To cite cml in publications, please use:")
 
-citEntry(entry = "Article",
+bibentry(
+  bibtype      = "Manual",
   title        = "Dimension Reduction with Prior Information for Knowledge Discovery",
-  author       = personList(as.person("Anh Tuan Bui")),
+  author       = c(person(given = "Anh Tuan", family = "Bui")),
   journal      = "arXiv:2111.13646",
   year         = "2021",
+  volume       = "164",
+  pages        = "148-152",
   url          = "https://arxiv.org/abs/2111.13646",
 
   textVersion  =
@@ -14,16 +17,19 @@ citEntry(entry = "Article",
         "https://arxiv.org/abs/2111.13646.")
 )
 
-citEntry(entry = "Article",
+bibentry(
+  bibtype      = "Manual",
   title        = "A Closed-Form Solution for Conditional Multidimensional Scaling",
-  author       = personList(as.person("Anh Tuan Bui")),
+  author       = c(person(given = "Anh Tuan", family = "Bui")),
   journal      = "Pattern Recognition Letters",
   year         = "2022",
+  volume       = "164",
+  pages        = "148-152",
   url          = "https://doi.org/10.1016/j.patrec.2022.11.007",
 
   textVersion  =
   paste("Anh Tuan Bui (2022).",
         "A Closed-Form Solution for Conditional Multidimensional Scaling.",
-        "Pattern Recognition Letters.",
+        "Pattern Recognition Letters", "164, 148-152.",
         "https://doi.org/10.1016/j.patrec.2022.11.007.")
 )

@@ -1,5 +1,5 @@
 condIsomap <- function (d, V, u.dim, epsilon = NULL, k, W,
-                        method = c('matrix', 'vector'),
+                        method = c('matrix', 'vector'), exact = TRUE,
                         it.max = 1000, gamma = 1e-05,
                         init = c('none', 'eigen', 'user'),
                         U.start, B.start, ...)
@@ -11,6 +11,6 @@ condIsomap <- function (d, V, u.dim, epsilon = NULL, k, W,
   }
 
   condMDS(d = d, V = V, u.dim = u.dim, W = W,
-          method = method, it.max = it.max, gamma = gamma,
+          method = method, exact = exact, it.max = it.max, gamma = gamma,
           init = init, U.start = U.start, B.start = B.start)
 }
