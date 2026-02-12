@@ -6,15 +6,15 @@ Conditional Multidimensional Scaling
 }
 
 \description{
-Wrapper of \code{condSmacof}, which finds a low-dimensional embedding of a given distance/dissimilarity matrix, conditioning on available manifold information.
+Wrapper of \code{condSmacof}, which finds a low-dimensional embedding of a given distance/dissimilarity matrix, conditioning on auxiliary manifold parameters.
 }
 
 \usage{
 condMDS(d, V, u.dim, W,
-        method = c('matrix', 'vector'), exact = TRUE,
-        it.max = 1000, gamma = 1e-05,
-        init = c('none', 'eigen', 'user'),
-        U.start, B.start) }
+                     method = c('matrix', 'vector'), exact = TRUE,
+                     it.max = 1000, gamma = 1e-05,
+                     init = c('none', 'eigen', 'user'),
+                     U.start, B.start, V.tilde.start = NULL) }
 
 \arguments{
   \item{d}{
@@ -33,7 +33,7 @@ an \emph{N}x\emph{N} symmetric weight matrix. If not given, a matrix of ones wil
 if \code{matrix}, there are no restrictions for the B matrix . If \code{vector}, the B matrix is restricted to be diagonal. The latter is more efficient for large \emph{q}.
 }
   \item{exact}{
-only relevant if \code{W} is not given. In this case, if \code{exact == FALSE}, \code{U} is updated by the large-\emph{N} approximation formula.
+If \code{FALSE}, use the large-\emph{N} approximation formula to update the embedding.
 }
   \item{it.max}{
 the max number of conditional SMACOF iterations.
@@ -50,6 +50,9 @@ user-defined starting values for the embedding (when \code{init = 'user'})
   \item{B.start}{
 starting \code{B} matrix.
 }
+  \item{V.tilde.start}{
+starting \code{V.tilde} matrix.
+}
 }
 
 \value{
@@ -60,20 +63,24 @@ starting \code{B} matrix.
 \item{init }{the value of the \code{init} argument.}
 \item{U.start }{the starting values for the embedding.}
 \item{B.start }{starting values for the \code{B} matrix.}
+\item{V.tilde.start }{starting values for the \code{V.tilde} matrix.}
+\item{V.hat }{imputed \code{V} matrix, if \code{V} contains rows with missing values.}
 \item{method }{the value of the \code{method} argument.}
 \item{exact }{the value of the \code{exact} argument.}
 }
 \references{
-Bui, A.T. (2021). Dimension Reduction with Prior Information for Knowledge Discovery. arXiv:2111.13646. https://arxiv.org/abs/2111.13646.
+Bui, A.T. (2024). Dimension Reduction with Prior Information for Knowledge Discovery. IEEE Transactions on Pattern Analysis and Machine Intelligence, 46, 3625-3636. https://doi.org/10.1109/TPAMI.2023.3346212
 
 Bui, A. T. (2022). A Closed-Form Solution for Conditional Multidimensional Scaling. Pattern Recognition Letters 164, 148-152. https://doi.org/10.1016/j.patrec.2022.11.007
+
+Bui, A.T. (2026). Conditional Multidimensional Scaling for Incomplete Conditioning Data. Journal of Multivariate Analysis. Accepted.
 }
 \author{
 Anh Tuan Bui
 }
 
 \seealso{
-\code{\link{condSmacof}, \link{condMDSeigen}, \link{condIsomap}}
+\code{\link{condSmacof}, \link{condSmacof_mer}, \link{condMDSeigen}, \link{condIsomap}}
 }
 \examples{
 # see help(cml)

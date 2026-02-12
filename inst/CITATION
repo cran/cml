@@ -1,35 +1,17 @@
 citHeader("To cite cml in publications, please use:")
 
 bibentry(
-  bibtype      = "Manual",
+  bibtype      = "Article",
   title        = "Dimension Reduction with Prior Information for Knowledge Discovery",
   author       = c(person(given = "Anh Tuan", family = "Bui")),
-  journal      = "arXiv:2111.13646",
-  year         = "2021",
-  volume       = "164",
-  pages        = "148-152",
-  url          = "https://arxiv.org/abs/2111.13646",
+  journal      = "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+  year         = "2024",
+  volume       = "46",
+  pages        = "3625-3636",
+  doi          = "10.1109/TPAMI.2023.3346212",
 
   textVersion  =
-  paste("Anh Tuan Bui (2021).",
-        "Dimension Reduction with Prior Information for Knowledge Discovery.",
-        "arXiv:2111.13646.",
-        "https://arxiv.org/abs/2111.13646.")
-)
-
-bibentry(
-  bibtype      = "Manual",
-  title        = "A Closed-Form Solution for Conditional Multidimensional Scaling",
-  author       = c(person(given = "Anh Tuan", family = "Bui")),
-  journal      = "Pattern Recognition Letters",
-  year         = "2022",
-  volume       = "164",
-  pages        = "148-152",
-  url          = "https://doi.org/10.1016/j.patrec.2022.11.007",
-
-  textVersion  =
-  paste("Anh Tuan Bui (2022).",
-        "A Closed-Form Solution for Conditional Multidimensional Scaling.",
-        "Pattern Recognition Letters", "164, 148-152.",
-        "https://doi.org/10.1016/j.patrec.2022.11.007.")
+  paste("Anh Tuan Bui (2024).",
+  "Dimension Reduction with Prior Information for Knowledge Discovery.",
+  "IEEE Transactions on Pattern Analysis and Machine Intelligence, 46, 3625-3636")
 )

@@ -8,20 +8,20 @@ Conditional Euclidean distance
 Internal functions.
 }
 \usage{
-condDist(U, V.tilda, one_n_t=t(rep(1,nrow(U))))
-condDist2(U, V.tilda2, one_n_t=t(rep(1,nrow(U))))
+condDist(U, V.tilde, one_n_t=t(rep(1,nrow(U))))
+condDist2(U, V.tilde2, one_n_t=t(rep(1,nrow(U))))
 }
 \arguments{
   \item{U}{ the embedding \code{U}}
-  \item{V.tilda}{ \code{= V \%*\% B}}
-  \item{V.tilda2}{ \code{= V \%*\% b^2*t(V)}}
+  \item{V.tilde}{ \code{= V \%*\% B}}
+  \item{V.tilde2}{ \code{= V \%*\% b^2*t(V)}}
   \item{one_n_t}{ \code{= t(rep(1,nrow(U)))}}
 }
 \value{
 a \code{dist} object.
 }
 \references{
-Bui, A.T. (2021). Dimension Reduction with Prior Information for Knowledge Discovery. arXiv:2111.13646. https://arxiv.org/abs/2111.13646.
+Bui, A.T. (2024). Dimension Reduction with Prior Information for Knowledge Discovery. IEEE Transactions on Pattern Analysis and Machine Intelligence, 46, 3625-3636. https://doi.org/10.1109/TPAMI.2023.3346212
 }
 \author{
 Anh Tuan Bui

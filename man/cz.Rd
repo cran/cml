@@ -24,7 +24,7 @@ the \code{dist} object of conditional distances.
 the matrix C(Z)
 }
 \references{
-Bui, A.T. (2021). Dimension Reduction with Prior Information for Knowledge Discovery. arXiv:2111.13646. https://arxiv.org/abs/2111.13646.
+Bui, A.T. (2024). Dimension Reduction with Prior Information for Knowledge Discovery. IEEE Transactions on Pattern Analysis and Machine Intelligence, 46, 3625-3636. https://doi.org/10.1109/TPAMI.2023.3346212
 }
 \author{
 Anh Tuan Bui

@@ -30,13 +30,13 @@ condMDSeigen <- function(d, V, u.dim, method = c('matrix', 'vector'))
   # estimate U
   if (q > 1) {
     B <- R %*% diag(sqrt(betas))
-    V.tilda <- V %*% B
+    V.tilde <- V %*% B
   } else {
     B <- sqrt(betas)
-    V.tilda <- V * B
+    V.tilde <- V * B
   }
   M <- diag(N) - matrix(1/N,N,N)
-  E <- eigen(M %*% (as.matrix(-d2/2) - V.tilda %*% t(V.tilda)) %*% M, symmetric = TRUE)
+  E <- eigen(M %*% (as.matrix(-d2/2) - V.tilde %*% t(V.tilde)) %*% M, symmetric = TRUE)
   ev <- E$values[1:u.dim]
   evec <- E$vectors[, 1:u.dim, drop = FALSE]
   k1 <- sum(ev > 0)
@@ -48,6 +48,6 @@ condMDSeigen <- function(d, V, u.dim, method = c('matrix', 'vector'))
   }
   U <- evec * rep(sqrt(ev), each = N)
 
-  list(U = U, B = B, eig = ev,
-       stress = sum((d - condDist(U, V.tilda))^2)/sum(d2))
+  list(U = U, B = unname(B), eig = ev,
+       stress = sum((d - condDist(U, V.tilde))^2)/sum(d2))
 }
